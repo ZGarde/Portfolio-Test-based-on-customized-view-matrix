@@ -1,4 +1,4 @@
-# Multi-Asset Factor Project
+# Multi-Asset Factor Project（Still Updating, add new factor about the corrleation between CN index and US index, check chart under data/market analysis column)
 
 This project is a first-stage data engineering and factor calculation pipeline for a multi-asset portfolio research workflow. It downloads data, builds daily returns, creates asset-specific factors, runs simple validation checks, and saves CSV outputs.
 
