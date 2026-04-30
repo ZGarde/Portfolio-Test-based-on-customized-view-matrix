@@ -1,0 +1,8 @@
+pandas
+numpy
+yfinance
+pandas_datareader
+akshare
+scipy
+matplotlib
+PyYAML

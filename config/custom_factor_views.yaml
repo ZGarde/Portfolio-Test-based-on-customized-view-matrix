@@ -1,0 +1,97 @@
+# Custom research-only Black-Litterman factor views.
+#
+# China gold revision:
+# - The primary custom signal is now china_gold_morning_to_evening_z.
+# - It measures China morning-to-evening information shock, not evening-to-evening momentum.
+# - lag_days controls when the signal is allowed to enter a view. Use 1 for a
+#   conservative daily backtest and 0 only for a same-day proxy experiment.
+# - US gold intraday open/reopen prices are unavailable, so validation is daily
+#   close-to-close proxy evidence only.
+# - Mapping parameters:
+#   trigger_threshold: minimum abs(z) needed to activate a view.
+#   q_scale: annualized Q per 1 z-score.
+#   q_cap: absolute annualized Q cap.
+#   base_confidence / confidence_slope / max_confidence: BL confidence mapping.
+
+use_custom_factor_views: true
+
+custom_views:
+  - name: china_gold_to_us_gold
+    enabled: false
+    factor_file: data/processed/clean_factor_panel.csv
+    factor_column: china_gold_morning_to_evening_z
+    affected_asset: Gold
+    direction: positive
+    lag_days: 0
+    view_type: absolute_dynamic_zscore
+    trigger_threshold: 0.3
+    q_scale: 0.01
+    q_cap: 0.03
+    base_confidence: 0.10
+    confidence_slope: 0.10
+    max_confidence: 1
+    description: "China gold morning-to-evening z-score maps dynamically to a low-confidence Gold BL view. Research-only proxy; no US intraday open/reopen price is available."
+
+  - name: vix_to_nasdaq
+    enabled: true
+    factor_file: data/processed/clean_factor_panel.csv
+    factor_column: vix_change
+    affected_asset: Nasdaq
+    direction: negative
+    lag_days: 0
+    view_type: absolute_dynamic_zscore
+    trigger_threshold: 1.0
+    q_scale: 0.01
+    q_cap: 0.03
+    base_confidence: 0.10
+    confidence_slope: 0.10
+    max_confidence: 0.30
+    description: "VIX increase lowers Nasdaq BL view. Kept as research-only custom scenario context."
+
+  - name: oil_momentum_to_oil
+    enabled: false
+    factor_file: data/processed/clean_factor_panel.csv
+    factor_column: oil_mom_20d
+    affected_asset: Oil
+    direction: positive
+    lag_days: 0
+    view_type: absolute_dynamic_zscore
+    trigger_threshold: 1.0
+    q_scale: 0.01
+    q_cap: 0.03
+    base_confidence: 0.10
+    confidence_slope: 0.10
+    max_confidence: 0.30
+    description: "Oil momentum raises Oil BL view when enabled."
+
+  - name: btc_momentum_to_bitcoin
+    enabled: false
+    factor_file: data/processed/clean_factor_panel.csv
+    factor_column: btc_mom_5d
+    affected_asset: Bitcoin
+    direction: positive
+    lag_days: 0
+    view_type: absolute_dynamic_zscore
+    trigger_threshold: 1.0
+    q_scale: 0.01
+    q_cap: 0.03
+    base_confidence: 0.10
+    confidence_slope: 0.10
+    max_confidence: 0.30
+    description: "BTC short-term momentum raises Bitcoin BL view when enabled."
+
+  - name: sse_to_nasdaq_signal_z
+    enabled: true
+    factor_file: data/processed/clean_factor_panel.csv
+    factor_column: sse_to_nasdaq_signal_z
+    affected_asset: Nasdaq
+    direction: positive
+    lag_days: 0
+    view_type: absolute_dynamic_zscore
+    trigger_threshold: 0.1
+    q_scale: 0.01
+    q_cap: 0.03
+    base_confidence: 0.10
+    confidence_slope: 0.10
+    max_confidence: 0.30
+    description: "US-China Nasdaq-SSE correlation raises."

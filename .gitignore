@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments and local config
+.env
+.venv/
+venv/
+env/
+
+# IDE / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated data and charts
+data/raw/
+data/processed/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
