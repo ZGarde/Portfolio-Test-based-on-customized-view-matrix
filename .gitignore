@@ -16,8 +16,12 @@ env/
 Thumbs.db
 
 # Generated data and charts
-data/raw/
-data/processed/
+data/raw/*
+!data/raw/market_analysis/
+!data/raw/market_analysis/**
+data/processed/*
+!data/processed/market_analysis/
+!data/processed/market_analysis/**
 
 # Logs and temporary files
 *.log
